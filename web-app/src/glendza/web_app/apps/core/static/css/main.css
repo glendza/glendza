@@ -7,16 +7,26 @@
 
 /* -------------- Theming -------------- */
 
-:root {
-  --bg-color: #ffffff;
-  --text-color: #000000;
-  --primary-color: #007bff;
+[data-theme="light"] {
+  --bg-color: #fdf6e3;
+  --text-color: #657b83;
+  --primary-color: #268bd2;
+  --header-bg-color: 212,203,179;
+  --header-bg-opacity: 1;
+  
+  --link-color: #268bd2;
+  --button-bg-color: #268bd2;
+  --button-text-color: #ffffff;
+  --hover-bg-color: #93a1a1;
+  --border-color: #d3d7cf;
 }
 
 [data-theme="dark"] {
   --bg-color: #121212;
   --text-color: #ffffff;
   --primary-color: #1e90ff;
+  --header-bg-color: 33, 33, 33;
+  --header-bg-opacity: 0;
 }
 
 /* -------------- Body -------------- */
@@ -75,6 +85,7 @@ header {
   min-height: var(--header-height);
   height: var(--header-height);
   box-sizing: border-box;
+  background-color: rgba(var(--header-bg-color), var(--header-bg-opacity));
 }
 
 header .container {
@@ -113,4 +124,5 @@ footer {
   text-align: center;
   padding: 0 1rem;
   height: calc(100vh - var(--header-height) - var(--footer-height));
+  user-select: none;
 }

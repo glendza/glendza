@@ -3,14 +3,27 @@
 const SHRUGGIE = "¯\\_(ツ)_/¯";
 
 const THEMING_ATTRIBUTE_NAME = "data-theme";
+
 const THEMES = {
   light: "light",
   dark: "dark",
 };
 
+const THEME_ICONS = {
+  [THEMES.light]: "🌞",
+  [THEMES.dark]: "🌚",
+};
+
+const CSS_VARIABLES = {
+  headerBgOpacity: "--header-bg-opacity",
+};
+
 const LOCAL_STORAGE_KEYS = {
   theme: "theme",
 };
+
+// Example of a scroll position at which the header should be fully opaque
+const HEADER_FULL_OPACITY_SCROLL_POSITION = 300;
 
 const ELEMENT_IDS = {
   themeToggleButton: "theme-toggle-button",
@@ -21,7 +34,7 @@ const ELEMENT_IDS = {
 function getTheme() {
   // First check if the user has already declared a preference:.
   const configuredTheme = localStorage.getItem(LOCAL_STORAGE_KEYS.theme);
-  if (configuredTheme) {
+  if (configuredTheme && Object.values(THEMES).includes(configuredTheme)) {
     return configuredTheme;
   }
 
@@ -34,13 +47,22 @@ function setTheme(theme) {
   document.documentElement.setAttribute(THEMING_ATTRIBUTE_NAME, theme);
 }
 
-function toggleTheme() {
+function setThemeButtonAttributes(themeToggleButton, theme) {
+  const inverseTheme = theme === THEMES.light ? THEMES.dark : THEMES.light;
+  const label = `Switch to ${inverseTheme} mode`;
+  themeToggleButton.title = label;
+  themeToggleButton.ariaLabel = label;
+  themeToggleButton.textContent = THEME_ICONS[theme];
+}
+
+function toggleTheme(themeToggleButton) {
   const currentTheme = document.documentElement.getAttribute(
     THEMING_ATTRIBUTE_NAME
   );
   const newTheme = currentTheme === THEMES.light ? THEMES.dark : THEMES.light;
   document.documentElement.setAttribute(THEMING_ATTRIBUTE_NAME, newTheme);
   localStorage.setItem(LOCAL_STORAGE_KEYS.theme, newTheme);
+  setThemeButtonAttributes(themeToggleButton, newTheme);
 }
 
 function setUpTheming() {
@@ -60,7 +82,10 @@ function setUpTheming() {
     return;
   }
 
-  themeToggleButton.addEventListener("click", toggleTheme);
+  themeToggleButton.addEventListener("click", function () {
+    toggleTheme(themeToggleButton);
+  });
+  setThemeButtonAttributes(themeToggleButton, themeSetting);
 }
 
 /* -------------- App init -------------- */
@@ -75,3 +100,17 @@ function onDOMContentLoaded() {
 }
 
 document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
+
+/* -------------- Header -------------- */
+
+function setHeaderBgOpacity(opacityValue) {
+  document.documentElement.style.setProperty(
+    CSS_VARIABLES.headerBgOpacity,
+    opacityValue
+  );
+}
+
+window.addEventListener("scroll", function () {
+  const opacityValue = window.scrollY / HEADER_FULL_OPACITY_SCROLL_POSITION;
+  setHeaderBgOpacity(Math.min(opacityValue, 1));
+});

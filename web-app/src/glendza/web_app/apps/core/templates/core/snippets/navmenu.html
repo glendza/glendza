@@ -1,5 +1,5 @@
-{% if menu_items %}
-  <nav>
+<nav>
+  {% if menu_items %}
     <ul class="menu">
       {% for item in menu_items %}
         <li>
@@ -12,5 +12,9 @@
         </li>
       {% endfor %}
     </ul>
-  </nav>
-{% endif %}
+  {% endif %}
+  <button id="theme-toggle-button"
+          class="theme-toggler"
+          aria-label="Toggle theme">
+  </button>
+</nav>
