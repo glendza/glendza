@@ -1,7 +1,7 @@
 {% load static wagtailcore_tags %}
 
-<footer>
-  <div class="responsive-container">
+<footer class="footer">
+  <div class="footer__container responsive-container">
     {{ copyright_text|safe }}
     {% if github_url %}
       <a href="{{ github_url }}" target="_blank" rel="noopener noreferrer">

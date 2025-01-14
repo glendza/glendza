@@ -18,8 +18,11 @@ const CSS_VARIABLES = {
   headerBgOpacity: "--header-bg-opacity",
 };
 
+const LOCAL_STORAGE_PREFIX = "glendza";
+
 const LOCAL_STORAGE_KEYS = {
-  theme: "theme",
+  theme: `${LOCAL_STORAGE_PREFIX}:theme`,
+  scrollPosition: `${LOCAL_STORAGE_PREFIX}:scrollPosition`,
 };
 
 // Example of a scroll position at which the header should be fully opaque
@@ -88,10 +91,38 @@ function setUpTheming() {
   setThemeButtonAttributes(themeToggleButton, themeSetting);
 }
 
-/* -------------- App init -------------- */
+/* -------------- Header opacity -------------- */
+
+function setHeaderBgOpacity() {
+  const opacityValue = window.scrollY / HEADER_FULL_OPACITY_SCROLL_POSITION;
+  document.documentElement.style.setProperty(
+    CSS_VARIABLES.headerBgOpacity,
+    opacityValue
+  );
+}
+
+/* -------------- Scroll position -------------- */
+
+function saveScrollPosition() {
+  localStorage.setItem(LOCAL_STORAGE_KEYS.scrollPosition, window.scrollY);
+}
+
+function restoreScrollPosition() {
+  const scrollPosition = localStorage.getItem(
+    LOCAL_STORAGE_KEYS.scrollPosition
+  );
+
+  if (scrollPosition) {
+    window.scrollTo(0, scrollPosition);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.scrollPosition);
+  }
+}
+
+/* -------------- Event handlers -------------- */
 
 function onDOMContentLoaded() {
   setUpTheming();
+  setHeaderBgOpacity();
 
   console.log(
     `%c${SHRUGGIE}`,
@@ -99,18 +130,21 @@ function onDOMContentLoaded() {
   );
 }
 
-document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
-
-/* -------------- Header -------------- */
-
-function setHeaderBgOpacity(opacityValue) {
-  document.documentElement.style.setProperty(
-    CSS_VARIABLES.headerBgOpacity,
-    opacityValue
-  );
+function onWindowLoad() {
+  restoreScrollPosition();
 }
 
-window.addEventListener("scroll", function () {
-  const opacityValue = window.scrollY / HEADER_FULL_OPACITY_SCROLL_POSITION;
-  setHeaderBgOpacity(Math.min(opacityValue, 1));
-});
+function onBeforeUnload() {
+  saveScrollPosition();
+}
+
+function onScroll() {
+  setHeaderBgOpacity();
+}
+
+/* -------------- Event listeners -------------- */
+
+window.addEventListener("load", onWindowLoad);
+document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
+window.addEventListener("scroll", onScroll);
+window.addEventListener("beforeunload", onBeforeUnload);

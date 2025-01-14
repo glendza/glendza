@@ -1,19 +1,22 @@
-{% load static wagtailcore_tags wagtailsettings_tags navigation_tags menu_tags %}
+{% load static wagtailcore_tags wagtailsettings_tags navigation_tags menu_tags icons %}
 
 {% get_settings %}
 {% site_root as site_root %}
-<header>
-  <div class="container responsive-container">
+<header class="header">
+  <div class="header__container responsive-container">
     <!-- Logo -->
-    <a href="{% pageurl site_root %}" class="logo">
+    <a href="{% pageurl site_root %}" class="header__logo">
       {% if logo %}
-        <img src="{{ logo.file.url }}" alt="Logo" class="logo-image" />
+        <img src="{{ logo.file.url }}" alt="Logo" class="header__logo-image" />
       {% else %}
         {% wagtail_site as current_site %}
         {{ current_site.site_name }}
       {% endif %}
     </a>
     <!-- Navigation Menu -->
+    <button class="header__menu-toggler" aria-label="Toggle menu">
+      {% icon 'bars' %}
+    </button>
     {% navmenu settings.core.MainNavigationMenuSetting.menu.slug %}
   </div>
 </header>

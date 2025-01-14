@@ -9,5 +9,5 @@ class HeroSectionBlock(blocks.StructBlock):
 
     class Meta:
         icon = "image"
-        template = "core/blocks/hero_section.html"
+        template = "core/blocks/hero_section_block.html"
         label = "Hero Section"

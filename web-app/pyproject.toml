@@ -20,6 +20,7 @@ classifiers = [
 dependencies = [
   "Django>=5.1.4,<5.2",
   "django-environ>=0.11.2,<0.12",
+  "django-icons>=24.4,<25",
   "wagtail>=6.3.2,<6.4",
 ]
 
@@ -65,6 +66,7 @@ line_length = 119
 
 [tool.djlint]
 profile = "django"
+ignore='H006'
 line_length = 119
 indent = 2
 indent_with_spaces = true

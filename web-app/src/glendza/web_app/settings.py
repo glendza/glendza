@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     "glendza.web_app.apps.user",
     # Main website app:
     "glendza.web_app.apps.core",
+    # Third party apps:
+    "django_icons",
 ]
 
 if DEBUG:
@@ -157,6 +159,7 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
+
 # Wagtail settings:
 
 WAGTAIL_ADMIN_URL = env.str("WAGTAIL_ADMIN_URL", "cms/")
@@ -167,3 +170,13 @@ WAGTAILDOCS_EXTENSIONS = ["csv", "docx", "key", "odt", "pdf", "pptx", "rtf", "tx
 
 # Reverse the default case-sensitive handling of tags:
 TAGGIT_CASE_INSENSITIVE = True
+
+
+# django-icons:
+
+DJANGO_ICONS = {
+    "ICONS": {
+        "edit": {"name": "fa-solid fa-pencil"},
+        "bars": {"name": "fa-solid fa-bars"},
+    },
+}
