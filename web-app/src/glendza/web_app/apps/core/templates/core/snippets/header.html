@@ -14,7 +14,9 @@
       {% endif %}
     </a>
     <!-- Navigation Menu -->
-    <button class="header__menu-toggler" aria-label="Toggle menu">
+    <button class="header__menu-toggler"
+            id="navmenu-toggle-button"
+            aria-label="Toggle menu">
       {% icon 'bars' %}
     </button>
     {% navmenu settings.core.MainNavigationMenuSetting.menu.slug %}

@@ -29,6 +29,8 @@ const LOCAL_STORAGE_KEYS = {
 const HEADER_FULL_OPACITY_SCROLL_POSITION = 300;
 
 const ELEMENT_IDS = {
+  navigationMenu: "navmenu",
+  navigationMenuToggleButton: "navmenu-toggle-button",
   themeToggleButton: "theme-toggle-button",
 };
 
@@ -91,6 +93,30 @@ function setUpTheming() {
   setThemeButtonAttributes(themeToggleButton, themeSetting);
 }
 
+/* -------------- Navigation menu -------------- */
+
+function setUpNavigationMenu() {
+  const navmenu = document.getElementById(ELEMENT_IDS.navigationMenu);
+  if (!navmenu) {
+    console.warn(`No navmenu found with id "${ELEMENT_IDS.navigationMenu}"`);
+    return;
+  }
+
+  const navmenuToggleButton = document.getElementById(
+    ELEMENT_IDS.navigationMenuToggleButton
+  );
+  if (!navmenuToggleButton) {
+    console.warn(
+      `No navmenu toggle button found with id "${ELEMENT_IDS.navigationMenuToggleButton}"`
+    );
+    return;
+  }
+
+  navmenuToggleButton.addEventListener("click", function () {
+    navmenu.classList.toggle("navmenu--open");
+  });
+}
+
 /* -------------- Header opacity -------------- */
 
 function setHeaderBgOpacity() {
@@ -123,6 +149,7 @@ function restoreScrollPosition() {
 function onDOMContentLoaded() {
   setUpTheming();
   setHeaderBgOpacity();
+  setUpNavigationMenu();
 
   console.log(
     `%c${SHRUGGIE}`,
