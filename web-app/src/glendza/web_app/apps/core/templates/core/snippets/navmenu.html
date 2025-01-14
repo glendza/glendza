@@ -1,9 +1,10 @@
 <nav class="navmenu" id="navmenu">
   {% if menu_items %}
-    <ul class="menu">
+    <ul class="navmenu__menu-list">
       {% for item in menu_items %}
-        <li>
+        <li class="navmenu__menu-item">
           <a href="{{ item.link }}"
+             class="navmenu__menu-link"
              {% if item.open_in_new_tab %}
                target="_blank" rel="noopener noreferrer"
              {% endif %}>
