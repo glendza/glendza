@@ -178,5 +178,6 @@ DJANGO_ICONS = {
     "ICONS": {
         "edit": {"name": "fa-solid fa-pencil"},
         "bars": {"name": "fa-solid fa-bars"},
+        "xmark": {"name": "fa-solid fa-xmark"},
     },
 }

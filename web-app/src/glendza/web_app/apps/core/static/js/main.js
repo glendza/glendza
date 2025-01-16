@@ -31,6 +31,7 @@ const HEADER_FULL_OPACITY_SCROLL_POSITION = 300;
 const ELEMENT_IDS = {
   navigationMenu: "navmenu",
   navigationMenuToggleButton: "navmenu-toggle-button",
+  navigationMenuCloseButton: "navmenu-close-button",
   themeToggleButton: "theme-toggle-button",
 };
 
@@ -112,8 +113,33 @@ function setUpNavigationMenu() {
     return;
   }
 
+  const navmenuCloseButton = document.getElementById(
+    ELEMENT_IDS.navigationMenuCloseButton
+  );
+  if (!navmenuCloseButton) {
+    console.warn(
+      `No navmenu close button found with id "${ELEMENT_IDS.navigationMenuCloseButton}"`
+    );
+    return;
+  }
+
   navmenuToggleButton.addEventListener("click", function () {
     navmenu.classList.toggle("navmenu--open");
+  });
+
+  // Closing the navigation menu:
+
+  function closeNavigationMenu() {
+    navmenu.classList.remove("navmenu--open");
+  }
+
+  navmenuCloseButton.addEventListener("click", closeNavigationMenu);
+
+  document.addEventListener("keyup", function (event) {
+    if (event.key === "Escape") {
+      closeNavigationMenu();
+      document.removeEventListener("keyup", closeNavigationMenu);
+    }
   });
 }
 

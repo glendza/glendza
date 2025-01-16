@@ -1,4 +1,11 @@
+{% load icons %}
+
 <nav class="navmenu" id="navmenu">
+  <button id="navmenu-close-button"
+          class="navmenu__close-button"
+          aria-label="Close menu">
+    {% icon 'xmark' %}
+  </button>
   {% if menu_items %}
     <ul class="navmenu__menu-list">
       {% for item in menu_items %}
